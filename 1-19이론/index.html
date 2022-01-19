@@ -6,11 +6,19 @@
   
 </head>
 <body>
-   
-  <input type="button" value="dark" onclick="target.style.backgroundColor='black'; 
-  target.style.color='white'">
-  <input type="button" value="day" onclick="target.style.backgroundColor='white'; 
-  target.style.color='black'">
+    <input type="button" value="dark" onclick="
+        if(this.value==='dark'){
+            target.style.backgroundColor='black'; 
+            target.style.color='white'
+            this.value='day';
+        }
+        else {
+            target.style.backgroundColor='white'; 
+            target.style.color='black';
+            this.value='dark';
+        }
+    
+    ">
   <h1><a href="index.html">WEB</a></h1>
   <ol>
     <li><a href="1.html">HTML</a></li>
@@ -23,7 +31,7 @@
     Internet!!!!
   </p>
   <script>
-    let target = document.querySelector('h1');
+    let target = document.querySelector('body');
     console.log(target);
   </script>
 </body>
