@@ -8,11 +8,19 @@
 <body>
     <input type="button" value="dark" onclick="
         if(this.value==='dark'){
+            let as = document.querySelectorAll('a');
+            for(let i=0; i<as.length; i+=1){
+            console.log(as[i].style.color= 'white');
+        } 
             target.style.backgroundColor='black'; 
             target.style.color='white'
             this.value='day';
         }
         else {
+            let as = document.querySelectorAll('a');
+            for(let i=0; i<as.length; i+=1){
+            console.log(as[i].style.color= 'black');
+        }
             target.style.backgroundColor='white'; 
             target.style.color='black';
             this.value='dark';
