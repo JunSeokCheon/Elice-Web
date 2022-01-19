@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+    </head>
+    <body>
+        <!-- <ol>
+        옛날 방식
+            <li>item1</li>
+            <li>item2</li>
+            <li>item3</li>
+        </ol> -->
+        <style>
+        /* 선택자 우선순위 : style 속성 > id > class > tag (!important 제일 우선 순위)*/
+            li {
+                color: blue;
+            }
+            .em {
+                text-decoration: underline;
+                color: yellow;
+            }
+            #vip {
+                font-size: 30px;
+                color: green;
+            }
+        </style>
+        <h1 class="em">Selector</h1> 
+        <!-- 클래스는 그룹핑을 하기 위한 용도! id는 식별하기 위한 용도! -->
+        <ol>
+            <li>item1</li>
+            <li>item2</li>
+            <li class="em" id="vip" style="color:red;">item3</li>
+        </ol>
+    </body>
+</html>

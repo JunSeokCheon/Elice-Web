@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- block: 한줄을 다 차지 / inline : 자기 구역만 차지 -->
+    <!-- flex:  기준점을 자기 자신 / grid: 기준점을 부모 -->
+    <style>
+        .flex_box {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .grid_box {
+            display:grid;
+            grid-template-columns: 1fr 2fr 1fr;
+        }
+        /* .red1 { 비율 조정
+            flex:1
+        }
+        .green1 {
+            flex:1
+        }
+        .blue1 {
+            flex:1
+        } */
+    </style>
+</head>
+<body>
+    <p>FLEX 예시</p>
+    <div class="flex_box">
+        <div class="red1" style="background-color: red">1</div>
+        <div class="green1" style="background-color: green">2</div>
+        <div class="blue1" style="background-color: blue">3</div>
+    </div>
+
+    <p>Grid 예시</p>
+    <div class="grid_box">
+        <div style="background-color: red;">1</div>
+        <div style="background-color: green;">2</div>
+        <div style="background-color: blue;">3</div>
+    </div>
+</body>
+</html>
