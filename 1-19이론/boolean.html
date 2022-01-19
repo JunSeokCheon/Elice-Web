@@ -36,23 +36,24 @@
         console.log(4);
     </script>
     <h1>조건문의 응용</h1>
-    <input type="button" value="로그인" onclick="let name = prompt('누구세요?')
+    <!-- <input type="button" value="로그인" onclick="let name = prompt('누구세요?')
     if(name==='이고잉'){
         this.value = name + '님 어서오세요';
     }
     else{
         this.value = '뉘슈?';
-    }">
-    <!-- <script>
-        function button_click() {
+    }"> -->
+    <input type="button" value="로그인" onclick="button_click(this)">
+    <script>
+        function button_click(self) {
             let name = prompt("누구세요?");
             if(name==="이고잉"){
-                this.value = name + '님 어서오세요';
+                self.value = name + '님 어서오세요';
             }
             else{
-                this.value = "뉘슈?";
+                self.value = "뉘슈?";
             }
         }
-    </script> -->
+    </script>
 </body>
 </html>
