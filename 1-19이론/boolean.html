@@ -19,5 +19,40 @@
         console.log('1===0 =>', 1===0); // == : 값만 비교, === : 값, 데이터 타입도 비교
         console.log('1===1 =>', 1===1);
     </script>
+    <h1>Conditional Statements</h1>
+    <script>
+        console.log(1);
+        if(true){
+            console.log(2);
+            console.log(3);
+        }
+        console.log(4);
+
+        console.log(1);
+        if(false){
+            console.log(2);
+            console.log(3);
+        }
+        console.log(4);
+    </script>
+    <h1>조건문의 응용</h1>
+    <input type="button" value="로그인" onclick="let name = prompt('누구세요?')
+    if(name==='이고잉'){
+        this.value = name + '님 어서오세요';
+    }
+    else{
+        this.value = '뉘슈?';
+    }">
+    <!-- <script>
+        function button_click() {
+            let name = prompt("누구세요?");
+            if(name==="이고잉"){
+                this.value = name + '님 어서오세요';
+            }
+            else{
+                this.value = "뉘슈?";
+            }
+        }
+    </script> -->
 </body>
 </html>
