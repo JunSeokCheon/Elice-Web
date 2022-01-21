@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let A = [1,2,3,4,5,6,7,8,9,10]; // 반환 값이 있다.
+        A.map(function(v) {
+            return v * 2;
+        }); 
+        A.forEach(v => { // 반환 값이 없다.
+            console.log(v*2);
+        });
+    </script>
+    <script>
+        let B = [1,2,3,4,5,6,7,8,9,10];
+        B = A.map(v => v);
+        console.log(B); // map은 깊은 복사 가능. 
+        // map은 return 값을 하나하나 return 해주고, foreach는 반환값이 없고, 단순히 순회한다.
+    </script>
+    <script> // 응용
+        let obj = {
+            name: '천준석',
+            company: '엘리스',
+        }
+        console.log(Object.keys(obj))
+        Object.keys(obj).forEach(key => {
+            console.log(obj[key]);
+        });
+    </script>
+</body>
+</html>
