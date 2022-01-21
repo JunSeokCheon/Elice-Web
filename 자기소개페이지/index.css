@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Jua', sans-serif;
+}
+
+.container {
+    width: 800px;
+    height: 100vh;
+    margin: 0px auto;
+}
+
+#upper-bar {
+    width: 80%;
+    height: 85%;
+    background-color: #777474;
+    padding: 30px 30px;
+}
+
+#upper-menu {
+    margin-left: 15px;
+    text-align: center;
+}
+#upper-menu div {
+    text-align: center;
+}
+
+#upper-menu div img {
+    margin-left: 13px;
+    width: 200px;
+    height: 200px;
+    border-radius: 20%;
+    border: solid 2px rgb(245, 243, 243);
+    transition: all 0.2s;
+}
+
+#upper-menu div img:hover {
+    transform: scale(1.2);
+}
+
+#upper-menu h2 {
+    font-size: 35px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#upper-menu h2 a {
+    font-family: 'Ubuntu', sans-serif;
+    transition: all 0.2s;
+}
+
+#upper-menu h2 a:hover {
+    color: #059b9b;
+    font-size: 30px;
+}
+
+#upper-menu a {
+    
+    display: inline-block;
+    text-decoration: none;
+    color: #000;
+}
+
+#upper-menu a .logo {
+    width: 40px;
+    height: 40px;
+    padding: 3px;
+    margin-bottom: 15px;
+    transition: all 0.2s;
+}
+
+#upper-menu a .logo:hover {
+    transform: scale(1.4);
+}
+
+#upper-menu .menu-list ul {
+    margin-top: 20px;
+}
+
+#upper-menu .menu-list li {
+    font-size: larger;
+    margin-top: 18px;
+    padding-left: 8px;
+    list-style: none;
+}
+
+#upper-menu .menu-list li a {
+    transition: all 0.2s;
+}
+
+#upper-menu .menu-list li a:hover {
+    color: #050505;
+    font-size: x-large;
+}
+
+#main {
+    width: 85%;
+    height: 95%;
+}
+
+#main .upper,
+#main .down {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    margin-top: 11px;
+    margin-left: 10px;
+}
+
+#main .down {
+    margin-top: 290px;
+}
+
+
+#main article.content {
+    display: flex;
+    flex-direction: column;
+
+    width: 70%;
+    height: 100%;
+
+    background-color: #f8f8f8;
+    color: rgb(7, 7, 7);
+    text-align: center;
+    margin: 7px 7px;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+#main article.content:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+#main article.content li {
+    font-size: 14px;
+    padding: 2px;
+}
+
+#main article.content .description {
+    margin-top: 20px;
+}
+
+footer {
+    height: 5%;
+    background-color: #fafafa;
+}
+
+footer .copyright p {
+    font-size: 13px;
+    color: grey;
+    padding: 15px 0 0 40px;
+}
+
+footer .email p {
+    font-size: 13px;
+    color: grey;
+    padding: 15px 40px 0 0;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
