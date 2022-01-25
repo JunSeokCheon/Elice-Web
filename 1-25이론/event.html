@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="inline" onclick="
+        alert(event.target.value);">
+
+    <input type="button" id="addEvent" value="addEventListener">
+    <script>
+        function clickHandler(evt) {
+            alert(evt.target.value);
+        }
+        function clickHandler2(evt) {
+            alert(evt.target.value);
+        }
+        document.querySelector('#addEvent').addEventListener('click', clickHandler);
+        document.querySelector('#addEvent').addEventListener('click', clickHandler2);
+    </script>
+</body>
+</html>
