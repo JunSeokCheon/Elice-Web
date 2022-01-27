@@ -7,28 +7,62 @@
 <body>
   <header>
     <h1><a href="index.html" onclick="
+        event.preventDefault();
+        mode = 'WELCOME';
+        Article();
     ">WEB</a></h1>
   </header>
   <nav>
     <ol></ol>
   </nav>
   <article>
+    <h2>Welcome</h2>
+    Hello, WEB
   </article>
   
   <script>
-      let topics = [
-          {id:1, title:'html', body:"html is .."},
-          {id:2, title:'css', body:"css is .."}
-      ]
-    function nav() {
-        let liTag = '';
-        for(let i =0; i<topics.length; i++) {
-            let t = topics[i];
-            liTag = liTag + `<li><a href="/read/${t.id}">${t.title}</a></li>`;
-        }
-        document.querySelector('nav>ol').innerHTML = liTag;
+    let selectedId = 1;
+    let mode = 'WELCOME';
+    let topics = [
+      {id:1, title:'html', body:'html is ...'},
+      {id:2, title:'css', body:'css is ...'}
+    ]
+    function Nav(){
+      let liTag = '';
+      for(let i=0; i<topics.length; i++){
+        liTag = liTag + `<li>
+          <a href="/read/${topics[i].id}" onclick="
+            event.preventDefault();
+            mode = 'READ';
+            selectedId = ${topics[i].id};
+            Article();
+          ">
+            ${topics[i].title}
+          </a>
+        </li>`;
+      }
+      document.querySelector('ol').innerHTML = liTag;
     }
-    nav();
+    Nav();
+    function Article(){
+      let articleTag = '';
+      if(mode === 'WELCOME'){
+        articleTag = `<h2>Welcome</h2>Hello, WEB`;
+      } else if(mode === 'READ'){
+        let title = '';
+        let body = '';
+        for(let i=0; i<topics.length; i++){
+          if(topics[i].id === selectedId){
+            title = topics[i].title;
+            body = topics[i].body;
+            break;
+          }
+        }
+        articleTag = `<h2>${title}</h2>${body}`;
+      }
+      document.querySelector('article').innerHTML = articleTag;
+    }
+    Article();
   </script>
 </body>
 </html>
