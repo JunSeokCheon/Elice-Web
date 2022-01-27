@@ -1,48 +1,68 @@
 <!doctype html>
 <html>
 <head>
-  <title>WEB1 - Welcome</title>
+  <title>WEB1</title>
   <meta charset="utf-8">
 </head>
 <body>
-  <h1><a href="index.html">WEB</a></h1>
+  <header>
+    <h1><a href="index.html" onclick="
+        event.preventDefault();
+        mode = 'WELCOME';
+        Article();
+    ">WEB</a></h1>
+  </header>
   <nav>
-      <ol>
-        <!-- <li><a href="1.html">HTML</a></li>
-        <li><a href="2.html">CSS</a></li>
-        <li><a href="3.html">JavaScript</a></li> -->
-      </ol>
+    <ol></ol>
   </nav>
-  <h2>WEB</h2>
-  <p>The World Wide Web (abbreviated WWW or the Web) is an information space where documents and other web resources are
-    identified by Uniform Resource Locators (URLs), interlinked by hypertext links, and can be accessed via the
-    Internet!!!!
-    <script>
-        let topics = [
-            {id:1, title:'html', body:'html is ...'},
-            {id:2, title:'css', body:'css is ...'},
-            {id:3, title:'js', body:'javascript is ...'}
-        ]
-        // 정공법 : 장황하다.
-        // let text = document.createTextNode('HTML');
-        // let a = document.createElement('a');
-        // a.setAttribute('href', '1.html');
-        // let li = document.createElement('li');
-        // a.appendChild(text);
-        // li.appendChild(a);
-        // document.querySelector('ol').appendChild(li);
-
-        // document.querySelector('ol').innerHTML = document.querySelector('ol').innerHTML + `<li><a href ="/read/1">HTML</a></li>`;
-
-        function Nav() {
-            let liTag = '';
-            for(let i =0; i<topics.length; i++) {
-                liTag =  liTag + `<li><a href ="/read/${topics[i].id}">${topics[i].title}</a></li>`;
-            } 
-            document.querySelector('ol').innerHTML = liTag;
+  <article>
+    <h2>Welcome</h2>
+    Hello, WEB
+  </article>
+  
+  <script>
+    let selectedId = null;
+    let mode = 'WELCOME';
+    let topics = [
+      {id:1, title:'html', body:'html is ...'},
+      {id:2, title:'css', body:'css is ...'}
+    ]
+    function Nav(){
+      let liTag = '';
+      for(let i=0; i<topics.length; i++){
+        liTag = liTag + `<li>
+          <a href="/read/${topics[i].id}" onclick="
+            event.preventDefault();
+            mode = 'READ';
+            selectedId = ${topics[i].id};
+            Article();
+          ">
+            ${topics[i].title}
+          </a>
+        </li>`;
+      }
+      document.querySelector('ol').innerHTML = liTag;
+    }
+    Nav();
+    function Article(){
+      let articleTag = '';
+      if(mode === 'WELCOME'){
+        articleTag = `<h2>Welcome</h2>Hello, WEB`;
+      } else if(mode === 'READ'){
+        let title = '';
+        let body = '';
+        for(let i=0; i<topics.length; i++){
+          if(topics[i].id === selectedId){
+            title = topics[i].title;
+            body = topics[i].body;
+            break;
+          }
         }
-        Nav()
-        
-    </script>
+        articleTag = `<h2>${title}</h2>${body}`;
+      }
+      document.querySelector('article').innerHTML = articleTag;
+    }
+    Article();
+  </script>
 </body>
 </html>
