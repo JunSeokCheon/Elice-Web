@@ -1,0 +1,35 @@
+<script>
+    n0='n0'; // global
+    var v0='v0'; // global
+    let l0='l0'; // script
+    const c0 = 'c0'; // script
+    console.log(v0, n0, l0, c0);
+    console.log(window.v0, window.n0, window.l0, window.c0); // anonymous에서는 let, const는 script에 저장된다. var, 그냥 변수는 global에 저장된다. 
+    // 다른 함수에서 하이퍼 컨텍스트에서의 script,global는 언제든지 접근 가능하다. 동일 변수일 경우 loacl 함수 변수가 우선이 된다.
+    // 서로 다른 함수에서는 global로 선언된 변수만 참조 가능하다.
+    // global execute context | function execute context
+    // global, script => script는 사용자 정의 scope / global도 사용자 정의를 할 순 있으나 권장되지 않음.(미리 만들어 놓은 함수나 변수들이 많이 존재함)
+    function fn2(){
+        n2='n2';
+        console.log(n0, n1, n2);
+        var v2='v2';
+        console.log(v0, v2);
+        // console.log(v1)
+        let l2='l2'; 
+        console.log(l0, l2);
+        // console.log(l1);
+        const c2='c2;';
+        console.log(c0, c2);
+        // console.log(c1);
+    1}
+    function fn1(){
+        n1='n1'; // n1은 global에 저장
+        var v1='v1'; // local에 저장
+        let l1='l1'; // local에 저장
+        const c1='c1'; // local에 저장
+        fn2();
+    }
+    fn1();
+    console.log(n2);
+    // console.log(v2, l2, c2);
+    </script>
