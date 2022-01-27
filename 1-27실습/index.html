@@ -1,0 +1,50 @@
+<!-- 함수에서의 this는 window / 객체, 클래스에서의 this는 자신 자신을 가르킨다. -->
+<!-- 자바스크립트에서는 함수를 변수로 다룰 수 있다. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        date = new Date();
+        console.log(date.getHours);
+        console.log(date.getMinutes);
+
+        class Time {
+            constructor() {
+                this.date = new Date();
+            }
+            getTimeStr() {
+                return `${this.date.getHours()}시 ${this.date.getMinutes()}분`; 
+            }
+        }
+        Time1 = new Time()
+        console.log(Time1.getTimeStr());
+    </script>
+    <script>
+        class Champion {
+    constructor(name) {
+        this.name = name;
+        console.log(`소환사 협곡에 ${this.name}(가)이 등장했습니다`);
+    }
+
+    Q() {
+        console.log(this.name +" 챔피언이 Q 스킬 시전");
+    }
+
+    W() {
+        console.log(this.name +" 챔피언이 W 스킬 시전");
+    }
+    
+    }
+    user1 = new Champion("아리");
+    user1.Q();
+    user1.W();
+
+    </script>
+</body>
+</html>
