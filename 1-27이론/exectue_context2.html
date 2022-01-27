@@ -1,0 +1,35 @@
+<script>
+    n0='n0';
+    var v0='v0';
+    let l0='l0';
+    const c0 = 'c0';
+    console.log(v0, n0, l0, c0);
+    console.log(window.v0, window.n0, window.l0, window.c0);
+    // fn1 안에 fn2이 선언되어있으면 fn2는 fn1의 scope를 가진다.
+    // 반면에 fn1과 fn2이 다른 위치에 선언 되어있으면 다른 scope를 가진다. (fn1안에 fn2의 호출이 있더라도)
+    // js는 호출되는 위치(dynamic scope)에 따라서 scope는 달라지지 않는다. 그러나, 선언되어 있는 위치(static scope, lexical scope)에 따라서 scope이 다르다.
+    function fn1(){ // fn2의 위치가 중요하지 않다. 호이스팅
+        n1='n1';
+        var v1='v1';
+        let l1='l1';
+        const c1='c1';
+        function fn2(){
+            n2='n2';
+            console.log(n0, n1, n2);
+            var v2='v2';
+            console.log(v0, v2);
+            console.log(v1)
+            let l2='l2'; 
+            console.log(l0, l2);
+            console.log(l1);
+            const c2='c2;';
+            console.log(c0, c2);
+            console.log(c1);
+        }
+        fn2();
+    }
+    fn1();
+    // fn2의 parent scope를 Closure이라고 한다.
+    console.log(n2);
+    // console.log(v2, l2, c2);
+    </script>
