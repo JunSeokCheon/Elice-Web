@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      window.onload = () => {
+        fetch("https://elice-movie-data.herokuapp.com/data")
+          .then((response) => response.json()) // then : 끝나는 시점을 알기 위해서 중요!
+          .then((data) => {
+            const result = data
+              .map(
+                (v) => `
+                <div>
+            <img src="${v.img}">
+            <p>${v.name}</p>
+            <p>${v.summary}</p>
+            </div>
+            `
+              )
+              .join("");
+
+            document.write(result);
+          });
+      };
+    </script>
+  </head>
+  <body></body>
+</html>
