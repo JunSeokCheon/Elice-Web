@@ -3,9 +3,10 @@
     </ul>
 </nav>
 <input type="button" value="GET" onclick="
-fetch('http://localhost:3000/topics')
-  .then(response => response.json())
-  .then(data => {
+fetch('http://localhost:3000/topics') // fetch : http response객체를 래핑한 promise 객체를 반환
+  .then(response => response.json()) // .then : 프로미스의 후속 처리 메서드인 then을 사용하여 resolve한 객체를 전달 받기 가능(catch, finally도 같음)
+  // res.json 메서드 사용 시 http 응답 body 텍스트를 json 형식으로 바꾼 프로미스를 반환
+  .then(data => { // 원격 API에 있는 데이터를 가져올때 : GET
     let lis = '';
     for(let i=0; i<data.length; i++){
         lis = lis + `<li>${data[i].title}</li>`;
@@ -26,7 +27,7 @@ fetch('https://jsonplaceholder.typicode.com/posts')
 "> -->
 <input type="button" value="CREATE" onclick="
 fetch('http://localhost:3000/topics', {
-    method : 'POST',
+    method : 'POST',   // 새로운 포스트 생성 위해서는 method 옵션을 POST로 지정해주고, headers 옵션으로 JSON 포맷 사용한다고 알려줘야 함. body 옵션에는 요청 전문을 JSON 포맷
     headers: {
             'Content-Type': 'application/json',
         },
