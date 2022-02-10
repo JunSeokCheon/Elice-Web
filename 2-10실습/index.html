@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      textarea {
+        width: 500px;
+        height: 500px;
+      }
+      #code {
+        display: flex;
+      }
+    </style>
+    <script>
+      async function login(id, pw) {
+        const response = await fetch(
+          "https://elice-python-code-run.herokuapp.com/login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: id,
+              pw: pw,
+            }),
+          }
+        );
+        const json = await response.json();
+        if (json.status === "succ") return true;
+        return false;
+      }
+
+      async function codeRun(code) {
+        const response = await fetch(
+          "https://elice-python-code-run.herokuapp.com/code_run",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              lang: "python",
+              code: code,
+            }),
+          }
+        );
+        const json = await response.json();
+        if (json.status == "succ") {
+          return json.result.join("\n");
+        } else if (json.status == "fail") {
+          if (json.result === undefined) {
+            return "Error!!";
+          }
+          return json.result;
+        }
+      }
+
+      window.onload = () => {
+        const loginForm = document.getElementById("loginForm");
+        loginForm.onsubmit = (e) => {
+          e.preventDefault();
+          login(e.target.id.value, e.target.pw.value).then((result) => {
+            if (result === true) {
+              alert("로그인 성공");
+              const codeDOM = document.getElementsByName("code")[0];
+              codeDOM.disabled = false;
+            } else {
+              alert("로그인 실패");
+            }
+          });
+        };
+
+        const codeForm = document.getElementById("codeForm");
+        codeForm.onsubmit = (e) => {
+          e.preventDefault();
+          codeRun(e.target.code.value).then((result) => {
+            console.log(result);
+            e.target.result.value = result;
+          });
+        };
+      };
+    </script>
+  <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+  <body>
+    <h1>Online Python</h1>
+
+    <form id="loginForm">
+      <input type="text" name="id" />
+      <input type="password" name="pw" />
+      <input type="submit" value="로그인" />
+    </form>
+
+    <form id="codeForm">
+      <textarea name="code" disabled></textarea>
+      <input type="submit" value="실행" />
+      <textarea name="result" disabled></textarea>
+    </form>
+  <script type="text/javascript">(function(){window['__CF$cv$params']={r:'6db41cc34d790fb5',m:'yDWYNAWGRZYVHts9JEoZx66n9zXA4up_m7O.dY0zEHE-1644483261-0-AagJBJBAxK1/Y46EwXI44tl717rpepPap80tvLjsDUXX9yYnCVSewyNwvwhMwyq3q+TzRXCaVR/+OFbaedPIkXUyCJ4NqLkdVRPPRhBFvVGAdsXzAQSvpzVcQFaCDrTDMbCaNxe/JGVEH1h1oo1OJajefH7gYLRjjogOUCdQR1a3L4aNx5Hns2xzhSpqArH0rIoKA8L6jEn0jCWaAuPdxMA=',s:[0x23fa878644,0xf1819d3dd3],}})();</script></body>
+</html>
