@@ -1,0 +1,55 @@
+<script>
+    function timer(time){
+        return new Promise(function(resolve){
+            setTimeout(function(){
+                resolve(time);
+            }, time);
+        });
+    }
+    // console.time("timer")
+    // timer(1000).then(function(time){
+    //     console.log('time:'+time);
+    //     timer(time+1000).then(function(time){
+    //         console.log('time:'+time);
+    //         timer(time+1000).then(function(time){
+    //             console.log('time:'+time);
+    //             console.timeEnd('timer');
+    //         });
+    //     });
+    // });
+
+    // console.time("timer")
+    // timer(1000)
+    //     .then(function(time){
+    //     console.log('time:'+time);
+    //     return timer(time+1000);
+    //     })
+    //     .then(function(time){
+    //     console.log('time:'+time);
+    //     return timer(time+1000);
+    //     })
+    //     .then(function(time){
+    //     console.log('time:'+time);
+    //     console.timeEnd('timer');
+    //     })
+    async function run(){
+        console.time('timer')
+        let time = await timer(1000);
+        console.log('time:'+ time);
+        time = await timer(time+1000);
+        console.log('time:'+time);
+        time = await timer(time+1000);
+        console.log('time:'+time);
+        console.timeEnd('timer')
+    }
+    async function run2(){ // async를 함수 앞에 쓰면 promise를 반환
+        console.log('start')
+        await run()
+        console.log('end')
+    }
+    console.log('parent start');
+    run2().then(function(){
+        console.log('parent end');
+    }); // promise를 반환하기 때문에 then을 쓰자
+    
+</script>
