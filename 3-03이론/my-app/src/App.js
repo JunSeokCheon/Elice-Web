@@ -1,15 +1,20 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, ButtonGroup, Container, Row, Col, Modal } from 'react-bootstrap';
 import {Link, Routes, Route, useParams, useNavigate} from 'react-router-dom';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 function Article(props){
   return <article>
     <h2>{props.title}</h2>
     {props.body}
-  </article>  
+  </article>   
 }
 function Header(props){
+  const style = {
+    textDecoration: 'none'
+  }
   return <header>
-    <h1><Link to="/">{props.title}</Link></h1>
+    <h1><Link to="/" style={style}>{props.title}</Link></h1>
   </header>
 }
 function Nav(props){
@@ -26,15 +31,21 @@ function Nav(props){
   </nav>
 }
 function Read(props){
+  console.log('Read render');
   const params = useParams();
   const id = Number(params.id);
-  let title, body = '';
-  for(let i=0; i<props.topics.length; i++){
-    if(props.topics[i].id === id){
-      title = props.topics[i].title;
-      body = props.topics[i].body;
-    }
-  }
+  const [title, setTitle] = useState('Loading....');
+  const [body, setBody] = useState('Loading....');
+  useEffect(function(){
+    fetch('http://localhost:4000/topics/'+id)
+    .then(function(request){
+      return request.json();
+    })
+    .then(function(response){
+      setTitle(response.title);
+      setBody(response.body);
+    })
+  }, [id]);
   return <Article title={title} body={body}></Article>
 }
 function Create(props){
@@ -56,6 +67,7 @@ function Create(props){
 function Update(props){
   const params = useParams();
   const id = Number(params.id);
+  /*
   let _title, _body = '';
   for(let i=0; i<props.topics.length; i++){
     if(props.topics[i].id === id){
@@ -65,6 +77,21 @@ function Update(props){
   }
   const [title, setTitle] = useState(_title);
   const [body, setBody] = useState(_body);
+  */
+
+  const [title, setTitle] = useState('Loading....');
+  const [body, setBody] = useState('Loading....');
+  useEffect(function(){
+    fetch('http://localhost:4000/topics/'+id)
+    .then(function(request){
+      return request.json();
+    })
+    .then(function(response){
+      setTitle(response.title);
+      setBody(response.body);
+    })
+  }, [id]);
+
   function submitHandler(event){
     event.preventDefault();
     let t = event.target.title.value;
@@ -83,54 +110,119 @@ function Update(props){
 function App() {
   console.log('App render');
   const navigate = useNavigate();
-  let [topics, setTopics] = useState([
-    {id:1, title:'html', body:'html is ...'},
-    {id:2, title:'css', body:'css is ...'},
-    {id:3, title:'js', body:'js is ...'}
-  ]);
-  let [nextId, setNextId] = useState(4);
-  function createHandler(_title, _body){
-    let newTopics = [...topics];
-    const newTopic = {id:nextId, title:_title, body:_body};
-    newTopics.push(newTopic);
-    setTopics(newTopics);
-    navigate('/read/'+nextId);
-    setNextId(nextId+1);
+  let [topics, setTopics] = useState([]);
+
+  function refreshTopics(){
+    fetch('http://localhost:4000/topics')
+    .then(function(request){
+      return request.json();
+    })
+    .then(function(response){
+      setTopics(response);
+    });
   }
-  function updateHandler(_id, _title, _body){
-    let newTopics = [...topics];
-    for(let i=0; i<newTopics.length; i++){
-      if(newTopics[i].id === _id){
-        newTopics[i].title = _title;
-        newTopics[i].body = _body;
-      }
+
+  // 방법 1
+  useEffect(refreshTopics, []);
+
+  /*
+  //방법 2
+  useEffect(function(){
+    async function refreshTopics(){
+      const request = await fetch('http://localhost:4000/topics');
+      const response = await request.json();
+      setTopics(response);
     }
-    setTopics(newTopics);
-    navigate('/read/'+_id);
+    refreshTopics();
+  }, []);
+  */
+
+  let [nextId, setNextId] = useState(4);
+  async function createHandler(_title, _body){
+    const request = await fetch('http://localhost:4000/topics',{
+      method:'POST', 
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({title:_title, body:_body})
+    });
+    const response = await request.json();
+    navigate('/read/'+response.id);
+    refreshTopics();
   }
-  return <>
+  async function updateHandler(_id, _title, _body){
+    const request = await fetch('http://localhost:4000/topics/'+_id,{
+      method:'PUT', 
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({id:_id, title:_title, body:_body})
+    });
+    const response = await request.json();
+    navigate('/read/'+response.id);
+    refreshTopics();
+  }
+  async function deleteHandler(id){
+    const request = await fetch('http://localhost:4000/topics/'+id,{
+      method:'DELETE'
+    });
+    const response = await request.json();
+    navigate('/');
+    refreshTopics();
+  }
+  return <Container>
       <Header title="React"></Header>
-      <Nav topics={topics}></Nav>
-      <Routes>
-        <Route path="/" element={<Article title="Welcome" body="Hello, WEB"></Article>}></Route>
-        <Route path="/read/:id" element={<Read topics={topics}></Read>}></Route>
-        <Route path="/create" element={<Create onCreate={createHandler}></Create>}></Route>
-        <Route path="/update/:id" element={<Update topics={topics} onUpdate={updateHandler}></Update>}></Route>
-      </Routes>
-      <Routes>
-        <Route path="/" element={<Control></Control>}></Route>
-        <Route path="/read/:id" element={<Control></Control>}></Route>
-      </Routes>
-    </>
+      <Row xs={3}>
+        <Col><Nav topics={topics}></Nav></Col>
+        <Col>
+          <Routes>
+            <Route path="/" element={<Article title="Welcome" body="Hello, WEB"></Article>}></Route>
+            <Route path="/read/:id" element={<Read topics={topics}></Read>}></Route>
+            <Route path="/create" element={<Create onCreate={createHandler}></Create>}></Route>
+            <Route path="/update/:id" element={<Update topics={topics} onUpdate={updateHandler}></Update>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/" element={<Control></Control>}></Route>
+            <Route path="/read/:id" element={<Control onDelete={deleteHandler}></Control>}></Route>
+          </Routes>
+        </Col>
+      </Row>
+      
+    </Container>
 }
-function Control(){
+function Control(props){
   const params = useParams();
-  console.log('params', params);
-  return <ul>
-    <li><Link to="/create">Create</Link></li>
-    <li><Link to={'/update/'+params.id}>Update</Link></li>
-    <li><input type="button" value="Delete" /></li>
-  </ul> 
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  function handleClose(){
+    setShow(false);
+  };
+  return <>
+    <ButtonGroup>
+      <Button onClick={()=>{navigate('/create')}}>Create</Button>
+      <Button onClick={()=>{navigate('/update/'+params.id)}}>Update</Button>
+      <Button onClick={()=>{
+        setShow(true);
+      }}>Delete</Button>
+    </ButtonGroup>
+    <Modal show={show} onHide={handleClose}>
+    <Modal.Header closeButton>
+      <Modal.Title>Danger!!</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>지울꼬야~?</Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleClose}>
+        Close
+      </Button>
+      <Button variant="primary" onClick={() => {
+        props.onDelete(params.id);
+        handleClose();
+      }}>
+        Delete
+      </Button>
+    </Modal.Footer>
+  </Modal>
+</>
 }
 
 export default App;
